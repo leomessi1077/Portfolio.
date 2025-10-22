@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "install-all": "cd backend && npm install && cd ../frontend && npm install && cd ../api && npm install",
-    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\""
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
+    "install": "npm install --prefix frontend",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [
     "portfolio",
