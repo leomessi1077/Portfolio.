@@ -22,7 +22,6 @@ const Chatbot = () => {
   const [leadEmail, setLeadEmail] = useState('');
   const [leadMobile, setLeadMobile] = useState('');
   const [submittingLead, setSubmittingLead] = useState(false);
-  const [leadSubmitted, setLeadSubmitted] = useState(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
