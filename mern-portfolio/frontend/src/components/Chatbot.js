@@ -99,7 +99,6 @@ const Chatbot = () => {
         message: messages.filter(m => m.sender === 'user').slice(-1)[0]?.text || 'Chatbot lead'
       };
       await axios.post('http://localhost:5000/api/contact', payload);
-      setLeadSubmitted(true);
       setLeadModalOpen(false);
       setLeadName('');
       setLeadEmail('');
