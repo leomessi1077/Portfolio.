@@ -1,0 +1,24 @@
+{
+  "name": "mern-portfolio",
+  "version": "1.0.0",
+  "description": "Full-stack MERN portfolio with serverless backend",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "cd backend && npm install && cd ../frontend && npm install && cd ../api && npm install",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
+    "build": "cd frontend && npm run build",
+    "vercel-build": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "portfolio",
+    "mern",
+    "react",
+    "node",
+    "mongodb",
+    "vercel"
+  ],
+  "author": "Manish Kumar Yadav",
+  "license": "MIT"
+}
+
+

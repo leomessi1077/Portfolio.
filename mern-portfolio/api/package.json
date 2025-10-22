@@ -1,0 +1,11 @@
+{
+  "name": "portfolio-api",
+  "version": "1.0.0",
+  "description": "Serverless API functions for portfolio",
+  "main": "index.js",
+  "dependencies": {
+    "mongoose": "^8.19.1",
+    "twilio": "^5.10.3"
+  }
+}
+
