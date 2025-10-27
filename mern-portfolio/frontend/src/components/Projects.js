@@ -5,11 +5,11 @@ import { motion } from 'framer-motion';
 
 const projects = [
   {
-    title: 'QuickCart',
+    title: 'E-Commerce Platform',
     tech: ['MongoDB', 'Express.js', 'React.js', 'Node.js'],
-    description: 'Implemented seamless cart management and checkout functionality, providing a smooth and user-friendly shopping experience.',
-    github: 'https://github.com/leomessi1077/Quickcart',
-    live: '#',
+    description: 'Developed full-stack e-commerce platform with seamless cart management, checkout flow, JWT authentication with bcrypt hashing, role-based access control, seller dashboard with CRUD operations, and integrated Razorpay payment gateway with cryptographic verification.',
+    github: 'https://github.com/leomessi1077/E-commerce',
+    live: 'https://e-commerce-5t27.vercel.app/',
     image: '/1000120910.jpg',
     color: 'blue',
     featured: true
@@ -35,12 +35,12 @@ const projects = [
     featured: false
   },
   {
-    title: 'Movix App',
-    tech: ['React.js', 'TMDB API', 'SCSS', 'MUI', 'Redux'],
-    description: 'Created a dynamic web application using React.js and Redux to display currently popular movies from the TMDB API.',
-    github: 'https://github.com/leomessi1077/Movie-web-application',
-    live: 'https://movie-web-application-sigma.vercel.app/',
-    image: '/1000120916.jpg',
+    title: 'Real-Time Chat Application',
+    tech: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'Socket.io'],
+    description: 'Engineered messaging platform with Socket.io enabling real-time communication, typing indicators, and user status. Implemented JWT authentication with bcrypt hashing, token verification middleware, and 7-day session management. Designed responsive WhatsApp-inspired UI using Tailwind CSS.',
+    github: 'https://github.com/leomessi1077/Chat',
+    live: 'https://chat-rouge-xi-64.vercel.app/',
+    image: '/f30e6c88-40f5-43da-a216-6f93788b518f.jpg',
     color: 'pink',
     featured: true
   }

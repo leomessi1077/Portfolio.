@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Title, Text, Box, Card, ThemeIcon, Stack, Badge, SimpleGrid, rem, useMantineTheme } from '@mantine/core';
+import { Container, Title, Text, Box, Grid, Card, Group, ThemeIcon, Stack, Badge, SimpleGrid, rem, useMantineTheme } from '@mantine/core';
 import { motion } from 'framer-motion';
-import { IconCode, IconRocket, IconUsers, IconBulb, IconTrophy, IconHeart, IconTarget } from '@tabler/icons-react';
+import { IconCode, IconRocket, IconUsers, IconBulb, IconTrophy, IconHeart, IconTarget, IconBrandReact } from '@tabler/icons-react';
 
 const About = () => {
   const theme = useMantineTheme();

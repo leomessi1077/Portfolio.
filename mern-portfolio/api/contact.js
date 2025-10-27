@@ -59,19 +59,9 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // Try to connect to MongoDB, but don't fail if it doesn't work
-    let dbConnected = false;
-    try {
-      await connectDB();
-      dbConnected = true;
-    } catch (dbError) {
-      console.warn('MongoDB not connected, continuing without database:', dbError.message);
-    }
+    await connectDB();
 
     if (req.method === 'GET') {
-      if (!dbConnected) {
-        return res.status(503).json({ message: 'Database not connected' });
-      }
       const visitors = await Visitor.find().sort({ createdAt: -1 });
       return res.status(200).json(visitors);
     }
@@ -94,25 +84,17 @@ module.exports = async (req, res) => {
         });
       }
 
-      // Save to MongoDB if connected
-      if (dbConnected) {
-        try {
-          const visitor = new Visitor({
-            name,
-            email,
-            mobile,
-            message: message || '',
-            ipAddress: req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || 'unknown',
-            userAgent: req.headers['user-agent']
-          });
-          await visitor.save();
-          console.log('✅ Contact saved to MongoDB');
-        } catch (saveError) {
-          console.error('Error saving to MongoDB:', saveError.message);
-        }
-      } else {
-        console.log('📝 Contact received (MongoDB not connected):', { name, email, mobile });
-      }
+      // Create new visitor
+      const visitor = new Visitor({
+        name,
+        email,
+        mobile,
+        message: message || '',
+        ipAddress: req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || 'unknown',
+        userAgent: req.headers['user-agent']
+      });
+
+      await visitor.save();
 
       // WhatsApp notification via Twilio (if credentials are provided)
       if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {

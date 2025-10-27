@@ -1,48 +1,67 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Container, Title, Text, Box, Stack, Badge, ThemeIcon, Card, Timeline, rem, useMantineTheme, Divider, Group } from '@mantine/core';
 import { IconBriefcase, IconCalendar, IconMapPin, IconTrendingUp, IconCheck, IconBuilding, IconRocket } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 
 const Experience = () => {
+  console.log('✅ NEW VERSION LOADED - K-lite has 4 achievements only!');
+  
+  // Calculate dynamic duration for K-lite
+  const calculateDuration = (startYear, startMonth) => {
+    const startDate = new Date(startYear, startMonth - 1);
+    const currentDate = new Date();
+    const diffMonths = (currentDate.getFullYear() - startDate.getFullYear()) * 12 + (currentDate.getMonth() - startDate.getMonth());
+    
+    if (diffMonths === 0) return '1 mo';
+    if (diffMonths === 1) return '1 mo';
+    if (diffMonths < 12) return `${diffMonths} mos`;
+    
+    const years = Math.floor(diffMonths / 12);
+    const months = diffMonths % 12;
+    
+    if (months === 0) return years === 1 ? '1 yr' : `${years} yrs`;
+    return years === 1 ? `1 yr ${months} mos` : `${years} yrs ${months} mos`;
+  };
+
+  const kliteDuration = useMemo(() => calculateDuration(2025, 9), []);
+
   const experiences = [
     {
       id: 1,
-      title: 'Back End Developer',
+      title: 'Backend Developer',
       company: 'K-lite',
       type: 'Full-time',
       duration: 'Sep 2025 - Present',
-      period: '2 mos',
-      location: 'Delhi, India',
+      period: kliteDuration,
+      location: 'Delhi',
       locationType: 'On-site',
       current: true,
       color: 'blue',
       achievements: [
-        { text: 'Contributed to building and maintaining scalable backend systems for product-based applications', metric: '12% performance boost' },
-        { text: 'Designed and optimized database schemas, enhancing query efficiency', metric: '15% faster retrieval' },
-        { text: 'Developed and integrated RESTful APIs, ensuring seamless communication between services and frontend systems', metric: null },
-        { text: 'Collaborated with cross-functional teams to deliver high-quality product features on time', metric: 'improved satisfaction' },
-        { text: 'Debugged, tested, and optimized backend services', metric: '10% faster response' },
-        { text: 'Supported deployment and monitoring of production applications, ensuring system reliability and uptime', metric: null }
+        { text: 'Built task delegation and checklist systems with APIs, enhancing workflow management and team coordination', metric: null },
+        { text: 'Resolved 100+ critical bugs through systematic debugging, enhancing application stability and user experience', metric: '100+ bugs fixed' },
+        { text: 'Built comprehensive bug reporting system with backend logic, enabling real-time issue tracking and resolution', metric: null },
+        { text: 'Developed bug view dashboard with filtering and analytics, providing actionable insights for development and QA teams', metric: null }
       ]
     },
     {
       id: 2,
-      title: 'Back End Developer',
+      title: 'Backend Developer',
       company: 'Livnium',
       type: 'Internship',
       duration: 'April 2025 - September 2025',
-      period: '6 months',
-      location: 'Mumbai, Maharashtra, India',
+      period: '6 mos',
+      location: 'Mumbai, Maharashtra',
       locationType: 'Remote',
       current: false,
       color: 'violet',
       achievements: [
-        { text: 'Built scalable backend systems with Node.js', metric: '10% efficiency boost' },
-        { text: 'Integrated RESTful APIs', metric: '8% faster data flow' },
-        { text: 'Fixed bugs and added features with frontend team', metric: '10% better UX' },
-        { text: 'Debugged and optimized backend', metric: '12% faster response' },
-        { text: 'Delivered live client projects on time', metric: '9% team efficiency' },
-        { text: 'Developed app and website with team', metric: '10% client productivity' }
+        { text: 'Architected scalable Node.js, Backend Systems handling 1000+ daily requests, boosting overall efficiency by 10%', metric: '10% efficiency boost' },
+        { text: 'Developed real-time video calling feature using WebRTC, fulfilling critical client demand for enhanced communication', metric: null },
+        { text: 'Integrated AI-powered features into backend, enabling intelligent automation per client specifications', metric: null },
+        { text: 'Debugged and optimized backend, cutting response time by 12%', metric: '12% faster response' },
+        { text: 'Delivered live client projects on time, increasing team efficiency by 9%', metric: '9% team efficiency' },
+        { text: 'Debugged complex backend issues and optimized code architecture, reducing average API response time by 12%', metric: null }
       ]
     }
   ];
