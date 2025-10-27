@@ -22,7 +22,6 @@ const Chatbot = () => {
   const [leadEmail, setLeadEmail] = useState('');
   const [leadMobile, setLeadMobile] = useState('');
   const [submittingLead, setSubmittingLead] = useState(false);
-  const [leadSubmitted, setLeadSubmitted] = useState(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -100,7 +99,6 @@ const Chatbot = () => {
         message: messages.filter(m => m.sender === 'user').slice(-1)[0]?.text || 'Chatbot lead'
       };
       await axios.post('http://localhost:5000/api/contact', payload);
-      setLeadSubmitted(true);
       setLeadModalOpen(false);
       setLeadName('');
       setLeadEmail('');

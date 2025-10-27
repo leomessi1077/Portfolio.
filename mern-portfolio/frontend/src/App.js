@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { MantineProvider, Box } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
@@ -12,27 +12,8 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
-import ApiDebug from './components/ApiDebug';
 
 function App() {
-  const [showDebug, setShowDebug] = useState(false);
-
-  useEffect(() => {
-    // Show debug page if URL has ?debug=true
-    const params = new URLSearchParams(window.location.search);
-    setShowDebug(params.get('debug') === 'true');
-  }, []);
-
-  // If debug mode, show only debug page
-  if (showDebug) {
-    return (
-      <MantineProvider>
-        <Notifications position="top-center" zIndex={2000} />
-        <ApiDebug />
-      </MantineProvider>
-    );
-  }
-
   return (
     <MantineProvider>
       <Notifications position="top-center" zIndex={2000} />
