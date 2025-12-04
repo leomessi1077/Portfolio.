@@ -94,7 +94,7 @@ const Contact = () => {
   ];
 
   return (
-    <Box id="contact" bg="gray.0" py={rem(120)}>
+    <Box id="contact" py={rem(120)} style={{ position: 'relative', zIndex: 1 }}>
       <Container size="xl">
         {/* Section Header */}
         <motion.div
@@ -104,30 +104,33 @@ const Contact = () => {
           viewport={{ once: true }}
         >
           <Stack align="center" gap="xl" mb={rem(60)}>
-            <Badge 
-              size="xl" 
-              variant="gradient" 
-              gradient={{ from: 'grape', to: 'pink', deg: 45 }}
+            <Badge
+              size="xl"
+              variant="gradient"
+              gradient={{ from: 'grape', to: 'pink', deg: 90 }}
               radius="xl"
               px="xl"
               py="md"
               tt="uppercase"
               fw={700}
               leftSection={<IconSend size={18} />}
+              style={{
+                boxShadow: '0 4px 15px rgba(192, 38, 211, 0.5)',
+                letterSpacing: '1px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
             >
               Contact
             </Badge>
-            <Title 
-              order={1} 
-              ta="center" 
-              size={rem(48)}
-              fw={900}
-              variant="gradient"
-              gradient={{ from: 'grape', to: 'pink', deg: 45 }}
+            <Title
+              order={1}
+              className="section-title"
             >
               Get In Touch
             </Title>
-            <Text ta="center" c="dimmed" size="xl" maw={800} px="md">
+            <Text ta="center" c="dimmed" size="xl" maw={800} px="md" style={{ color: 'var(--text-secondary)' }}>
               Have a project in mind or want to collaborate? I'd love to hear from you!
             </Text>
           </Stack>
@@ -145,29 +148,17 @@ const Contact = () => {
                 viewport={{ once: true }}
               >
                 <Card
-                  shadow="md"
                   padding="xl"
                   radius="xl"
-                  withBorder
                   component={info.href ? Anchor : Box}
                   href={info.href || undefined}
                   target={info.href ? "_blank" : undefined}
+                  className="glass-card"
                   style={{
                     textDecoration: 'none',
-                    transition: 'all 0.3s ease',
-                    cursor: info.href ? 'pointer' : 'default'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (info.href) {
-                      e.currentTarget.style.transform = 'translateY(-4px)';
-                      e.currentTarget.style.boxShadow = theme.shadows.lg;
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (info.href) {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = theme.shadows.md;
-                    }
+                    cursor: info.href ? 'pointer' : 'default',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    backgroundColor: 'rgba(255,255,255,0.03)'
                   }}
                 >
                   <Stack gap="md">
@@ -176,14 +167,15 @@ const Contact = () => {
                       radius="xl"
                       variant="gradient"
                       gradient={{ from: info.color, to: info.color, deg: 45 }}
+                      style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.2)' }}
                     >
                       <info.icon size={rem(32)} />
                     </ThemeIcon>
                     <Stack gap="xs">
-                      <Text size="xs" fw={700} c="dimmed" tt="uppercase">
+                      <Text size="xs" fw={700} c="dimmed" tt="uppercase" style={{ color: 'rgba(255,255,255,0.5)' }}>
                         {info.title}
                       </Text>
-                      <Text size="lg" fw={700}>
+                      <Text size="lg" fw={700} style={{ color: 'white' }}>
                         {info.value}
                       </Text>
                     </Stack>
@@ -199,12 +191,20 @@ const Contact = () => {
               transition={{ duration: 0.5, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <Card shadow="md" padding="xl" radius="xl" withBorder>
+              <Card
+                padding="xl"
+                radius="xl"
+                className="glass-card"
+                style={{
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  backgroundColor: 'rgba(255,255,255,0.03)'
+                }}
+              >
                 <Stack gap="lg">
-                  <Text size="xs" fw={700} c="dimmed" tt="uppercase">
+                  <Text size="xs" fw={700} c="dimmed" tt="uppercase" style={{ color: 'rgba(255,255,255,0.5)' }}>
                     Connect With Me
                   </Text>
-                  <Divider />
+                  <Divider color="rgba(255,255,255,0.1)" />
                   <SimpleGrid cols={2} spacing="md">
                     <Button
                       component="a"
@@ -216,6 +216,7 @@ const Contact = () => {
                       size="lg"
                       radius="md"
                       fullWidth
+                      style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}
                     >
                       LinkedIn
                     </Button>
@@ -229,6 +230,7 @@ const Contact = () => {
                       size="lg"
                       radius="md"
                       fullWidth
+                      style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}
                     >
                       GitHub
                     </Button>
@@ -245,19 +247,27 @@ const Contact = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <Card shadow="lg" padding="xl" radius="xl" withBorder>
+            <Card
+              padding="xl"
+              radius="xl"
+              className="glass-card"
+              style={{
+                border: '1px solid rgba(255,255,255,0.1)',
+                backgroundColor: 'rgba(255,255,255,0.03)'
+              }}
+            >
               <form onSubmit={form.onSubmit(handleSubmit)}>
                 <Stack gap="lg">
                   <Stack gap="xs">
-                    <Title order={2} size="h2" fw={800}>
+                    <Title order={2} size="h2" fw={800} style={{ color: 'white' }}>
                       Send Message
                     </Title>
-                    <Text size="sm" c="dimmed">
+                    <Text size="sm" c="dimmed" style={{ color: 'rgba(255,255,255,0.6)' }}>
                       Fill out the form below and I'll get back to you soon
                     </Text>
                   </Stack>
 
-                  <Divider />
+                  <Divider color="rgba(255,255,255,0.1)" />
 
                   <TextInput
                     label="Full Name"
@@ -267,6 +277,14 @@ const Contact = () => {
                     size="lg"
                     radius="md"
                     {...form.getInputProps('name')}
+                    styles={{
+                      input: {
+                        backgroundColor: 'rgba(255,255,255,0.05)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        color: 'white'
+                      },
+                      label: { color: 'rgba(255,255,255,0.8)' }
+                    }}
                   />
 
                   <TextInput
@@ -277,6 +295,14 @@ const Contact = () => {
                     size="lg"
                     radius="md"
                     {...form.getInputProps('email')}
+                    styles={{
+                      input: {
+                        backgroundColor: 'rgba(255,255,255,0.05)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        color: 'white'
+                      },
+                      label: { color: 'rgba(255,255,255,0.8)' }
+                    }}
                   />
 
                   <TextInput
@@ -287,6 +313,14 @@ const Contact = () => {
                     size="lg"
                     radius="md"
                     {...form.getInputProps('mobile')}
+                    styles={{
+                      input: {
+                        backgroundColor: 'rgba(255,255,255,0.05)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        color: 'white'
+                      },
+                      label: { color: 'rgba(255,255,255,0.8)' }
+                    }}
                   />
 
                   <Textarea
@@ -296,6 +330,14 @@ const Contact = () => {
                     size="lg"
                     radius="md"
                     {...form.getInputProps('message')}
+                    styles={{
+                      input: {
+                        backgroundColor: 'rgba(255,255,255,0.05)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        color: 'white'
+                      },
+                      label: { color: 'rgba(255,255,255,0.8)' }
+                    }}
                   />
 
                   <Button
@@ -307,6 +349,7 @@ const Contact = () => {
                     variant="gradient"
                     gradient={{ from: 'grape', to: 'pink', deg: 45 }}
                     leftSection={<IconSend size={20} />}
+                    style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}
                   >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                   </Button>

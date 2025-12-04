@@ -1,241 +1,193 @@
 import React, { useState, useEffect } from 'react';
-import { Group, Anchor, Burger, Drawer, Stack, Box, rem, Indicator } from '@mantine/core';
+import { Container, Group, Burger, Drawer, Stack, Button, Box, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { motion } from 'framer-motion';
+import { IconCode } from '@tabler/icons-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
   const [opened, { toggle, close }] = useDisclosure(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
-  const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Contact', href: '#contact' },
-  ];
-
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-      
-      // Detect active section
-      const sections = navItems.map(item => item.href.substring(1));
-      const current = sections.find(section => {
+      setScrolled(window.scrollY > 50);
+
+      // Update active section based on scroll position
+      const sections = ['home', 'about', 'experience', 'skills', 'projects', 'contact'];
+      for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+          if (rect.top >= -100 && rect.top <= 300) {
+            setActiveSection(section);
+            break;
+          }
         }
-        return false;
-      });
-      
-      if (current) {
-        setActiveSection(current);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [navItems]);
+  }, []);
+
+  const scrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      close();
+      setActiveSection(id);
+    }
+  };
+
+  const menuItems = [
+    { label: 'Home', id: 'home' },
+    { label: 'About', id: 'about' },
+    { label: 'Experience', id: 'experience' },
+    { label: 'Skills', id: 'skills' },
+    { label: 'Projects', id: 'projects' },
+    { label: 'Contact', id: 'contact' },
+  ];
 
   return (
     <Box
-      component="header"
+      component={motion.header}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
       style={{
         position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
-        height: rem(70),
         zIndex: 1000,
-        background: scrolled 
-          ? 'rgba(255, 255, 255, 0.98)' 
-          : 'rgba(255, 255, 255, 0.9)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: `2px solid ${scrolled ? 'var(--mantine-color-violet-2)' : 'transparent'}`,
-        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        boxShadow: scrolled ? '0 4px 20px rgba(102, 126, 234, 0.1)' : 'none',
+        padding: scrolled ? '1rem 0' : '1.5rem 0',
+        transition: 'padding 0.3s ease'
       }}
     >
-      <Group justify="space-between" h="100%" px={rem(32)}>
-        {/* Logo */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
+      <Container size="lg">
+        <Box
+          style={{
+            background: scrolled ? 'rgba(3, 7, 18, 0.9)' : 'rgba(255, 255, 255, 0.03)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '100px',
+            padding: '0.75rem 1.5rem',
+            boxShadow: scrolled ? '0 10px 30px -10px rgba(0, 0, 0, 0.5)' : 'none',
+            transition: 'all 0.3s ease'
+          }}
         >
-          <Box
-            component={Anchor}
-            href="#home"
-            px="md"
-            py="xs"
-            style={{
-              background: 'linear-gradient(135deg, var(--mantine-color-violet-6), var(--mantine-color-grape-6))',
-              borderRadius: rem(8),
-              textDecoration: 'none',
-              transition: 'all 0.3s ease',
-              display: 'inline-block'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.05) rotateZ(-2deg)';
-              e.currentTarget.style.boxShadow = '0 8px 20px rgba(102, 126, 234, 0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1) rotateZ(0deg)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-          >
-            <Box
-              component="span"
-              c="white"
-              fw={900}
-              size={rem(24)}
-              style={{
-                letterSpacing: rem(-1),
-                fontFamily: 'system-ui, -apple-system'
-              }}
-            >
-              MKY
-            </Box>
-          </Box>
-        </motion.div>
-        
-        {/* Desktop Navigation */}
-        <Group gap="xs" visibleFrom="sm">
-          {navItems.map((item, index) => {
-            const isActive = activeSection === item.href.substring(1);
-            return (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                {isActive ? (
-                  <Indicator inline processing color="violet" size={8}>
-                    <Box
-                      component={Anchor}
-                      href={item.href}
-                      px={rem(16)}
-                      py={rem(8)}
-                      bg="violet.0"
-                      c="violet.7"
-                      fw={700}
-                      size="md"
-                      style={{
-                        textDecoration: 'none',
-                        borderRadius: rem(8),
-                        transition: 'all 0.2s ease',
-                        border: '2px solid var(--mantine-color-violet-3)'
-                      }}
-                    >
-                      {item.label}
-                    </Box>
-                  </Indicator>
-                ) : (
-                  <Box
-                    component={Anchor}
-                    href={item.href}
-                    px={rem(16)}
-                    py={rem(8)}
-                    c="gray.7"
-                    fw={500}
-                    size="md"
-                    style={{
-                      textDecoration: 'none',
-                      borderRadius: rem(8),
-                      transition: 'all 0.2s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'var(--mantine-color-gray-1)';
-                      e.currentTarget.style.color = 'var(--mantine-color-violet-7)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'transparent';
-                      e.currentTarget.style.color = 'var(--mantine-color-gray-7)';
-                    }}
-                  >
-                    {item.label}
-                  </Box>
-                )}
-              </motion.div>
-            );
-          })}
-        </Group>
-
-        {/* Mobile Burger Menu */}
-        <Burger 
-          opened={opened} 
-          onClick={toggle} 
-          hiddenFrom="sm" 
-          size="md"
-          color="violet"
-        />
-      </Group>
-
-      {/* Mobile Drawer */}
-      <Drawer 
-        opened={opened} 
-        onClose={close} 
-        size="75%" 
-        position="right"
-        hiddenFrom="sm"
-        padding="xl"
-        styles={{
-          content: {
-            background: 'linear-gradient(135deg, var(--mantine-color-violet-6), var(--mantine-color-grape-6))',
-          },
-          header: {
-            background: 'transparent',
-          },
-          close: {
-            color: 'white',
-            '&:hover': {
-              background: 'rgba(255, 255, 255, 0.2)',
-            }
-          },
-          body: {
-            padding: 0
-          }
-        }}
-      >
-        <Stack gap="xs" pt="xl">
-          {navItems.map((item, index) => (
-            <motion.div
-              key={item.label}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
+          <Group justify="space-between" h="100%">
+            {/* Logo */}
+            <Group
+              gap="xs"
+              style={{ cursor: 'pointer' }}
+              onClick={() => scrollTo('home')}
             >
               <Box
-                component={Anchor}
-                href={item.href}
-                onClick={close}
-                p="lg"
-                c="white"
+                style={{
+                  background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
+                  padding: '6px',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <IconCode size={20} color="white" stroke={2.5} />
+              </Box>
+              <Text
                 fw={700}
                 size="lg"
                 style={{
-                  textDecoration: 'none',
-                  display: 'block',
-                  borderRadius: rem(12),
-                  transition: 'all 0.2s ease',
-                  background: 'rgba(255, 255, 255, 0.1)',
+                  fontFamily: 'var(--font-heading)',
+                  letterSpacing: '-0.02em'
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
-                  e.currentTarget.style.transform = 'translateX(8px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-                  e.currentTarget.style.transform = 'translateX(0)';
+              >
+                Manish<span style={{ color: '#a855f7' }}>.dev</span>
+              </Text>
+            </Group>
+
+            {/* Desktop Menu */}
+            <Group gap={4} visibleFrom="sm">
+              {menuItems.map((item) => (
+                <Button
+                  key={item.id}
+                  variant="subtle"
+                  color="gray"
+                  radius="xl"
+                  size="sm"
+                  onClick={() => scrollTo(item.id)}
+                  style={{
+                    color: activeSection === item.id ? '#fff' : 'var(--text-secondary)',
+                    backgroundColor: activeSection === item.id ? 'rgba(255,255,255,0.1)' : 'transparent',
+                    fontWeight: 500,
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </Group>
+
+            {/* Mobile Menu Button */}
+            <Burger
+              opened={opened}
+              onClick={toggle}
+              hiddenFrom="sm"
+              size="sm"
+              color="white"
+            />
+          </Group>
+        </Box>
+      </Container>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        opened={opened}
+        onClose={close}
+        size="100%"
+        padding="xl"
+        hiddenFrom="sm"
+        zIndex={1001}
+        styles={{
+          content: {
+            background: '#030712',
+            color: 'white'
+          },
+          header: {
+            background: 'transparent',
+            color: 'white'
+          },
+          close: {
+            color: 'white',
+            '&:hover': { background: 'rgba(255,255,255,0.1)' }
+          }
+        }}
+      >
+        <Stack gap="xl" mt="xl" align="center">
+          {menuItems.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              style={{ width: '100%' }}
+            >
+              <Button
+                fullWidth
+                variant="subtle"
+                color="gray"
+                size="xl"
+                onClick={() => scrollTo(item.id)}
+                style={{
+                  color: activeSection === item.id ? '#a855f7' : 'white',
+                  fontSize: '1.5rem',
+                  height: '60px'
                 }}
               >
                 {item.label}
-              </Box>
+              </Button>
             </motion.div>
           ))}
         </Stack>

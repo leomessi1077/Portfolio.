@@ -8,19 +8,19 @@ const twilio = require('twilio');
 router.post('/', async (req, res) => {
   try {
     const { name, email, mobile, message } = req.body;
-    
+
     // Basic validation
     if (!name || !email || !mobile) {
-      return res.status(400).json({ 
-        message: 'Name, email, and mobile are required' 
+      return res.status(400).json({
+        message: 'Name, email, and mobile are required'
       });
     }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ 
-        message: 'Please provide a valid email address' 
+      return res.status(400).json({
+        message: 'Please provide a valid email address'
       });
     }
 
@@ -49,16 +49,16 @@ router.post('/', async (req, res) => {
     try {
       const accountSid = process.env.TWILIO_ACCOUNT_SID;
       const authToken = process.env.TWILIO_AUTH_TOKEN;
-      
+
       if (!accountSid || !authToken) {
         console.log('⚠️  Twilio credentials not configured - skipping WhatsApp notification');
         throw new Error('Twilio credentials not configured');
       }
-      
-      const client = twilio(accountSid, authToken);
-      
-      const whatsappMessage = `🚀 *New Portfolio Lead!*
 
+      const client = twilio(accountSid, authToken);
+
+      const whatsappMessage = `✨ *New Portfolio Lead!* ✨
+      
 👤 *Name:* ${name}
 📧 *Email:* ${email}
 📱 *Mobile:* ${mobile}
@@ -71,7 +71,7 @@ Reply to this message to start a conversation!`;
 
       const whatsappFrom = process.env.TWILIO_WHATSAPP_FROM || 'whatsapp:+14155238886';
       const whatsappTo = process.env.TWILIO_WHATSAPP_TO || 'whatsapp:+917571875252';
-      
+
       const twilioResponse = await client.messages.create({
         from: whatsappFrom,
         to: whatsappTo,
@@ -96,18 +96,18 @@ Reply to this message to start a conversation!`;
     }
 
     if (notifications.length) {
-      Promise.allSettled(notifications).catch(() => {});
+      Promise.allSettled(notifications).catch(() => { });
     }
 
-    res.status(201).json({ 
+    res.status(201).json({
       message: 'Thank you for your interest! I will get back to you soon.',
-      success: true 
+      success: true
     });
   } catch (error) {
     console.error('Contact form error:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       message: 'Something went wrong. Please try again later.',
-      success: false 
+      success: false
     });
   }
 });

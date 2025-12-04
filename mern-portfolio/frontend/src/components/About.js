@@ -5,7 +5,7 @@ import { IconCode, IconRocket, IconUsers, IconBulb, IconTrophy, IconHeart, IconT
 
 const About = () => {
   const theme = useMantineTheme();
-  
+
   const features = [
     {
       icon: IconCode,
@@ -52,7 +52,7 @@ const About = () => {
   ];
 
   return (
-    <Box id="about" bg="gray.0" py={rem(120)}>
+    <Box id="about" py={rem(120)} style={{ position: 'relative', zIndex: 1 }}>
       <Container size="xl">
         {/* Section Header */}
         <motion.div
@@ -62,47 +62,58 @@ const About = () => {
           viewport={{ once: true }}
         >
           <Stack align="center" gap="xl" mb={rem(60)}>
-            <Badge 
-              size="xl" 
-              variant="gradient" 
-              gradient={{ from: 'violet', to: 'grape', deg: 45 }}
+            <Badge
+              size="xl"
+              variant="gradient"
+              gradient={{ from: 'blue', to: 'cyan' }}
               radius="xl"
               px="xl"
               py="md"
               tt="uppercase"
               fw={700}
               leftSection={<IconTarget size={18} />}
+              style={{
+                boxShadow: '0 4px 20px rgba(6, 182, 212, 0.5)',
+                letterSpacing: '1px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
             >
               About Me
             </Badge>
-            
-            <Title 
-              order={1} 
-              ta="center"
-              size={rem(48)}
-              fw={900}
-              variant="gradient"
-              gradient={{ from: 'violet', to: 'grape', deg: 45 }}
+
+            <Title
+              order={1}
+              style={{
+                fontSize: rem(48),
+                fontWeight: 900,
+                background: 'linear-gradient(135deg, #fff 0%, #94a3b8 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textAlign: 'center'
+              }}
             >
               Profile Summary
             </Title>
-            
-            <Text 
-              size="xl" 
-              ta="center" 
-              c="dimmed" 
+
+            <Text
+              size="xl"
+              ta="center"
+              c="dimmed"
               maw={800}
               px="md"
+              style={{ color: 'var(--text-secondary)', fontSize: rem(20), lineHeight: 1.6 }}
             >
-              Full Stack Developer skilled in <Text span fw={700} c="violet">Java, JavaScript and React</Text>, 
+              Full Stack Developer skilled in <Text span fw={700} c="cyan.4">Java, JavaScript and React</Text>,
               focused on building scalable web applications and delivering impactful solutions that make a difference.
             </Text>
           </Stack>
         </motion.div>
 
         {/* Features Grid */}
-        <SimpleGrid 
-          cols={{ base: 1, sm: 2, md: 3 }} 
+        <SimpleGrid
+          cols={{ base: 1, sm: 2, md: 3 }}
           spacing="xl"
           mb={rem(80)}
         >
@@ -113,25 +124,19 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
+              whileHover={{ y: -10, scale: 1.02 }}
             >
               <Card
-                shadow="md"
                 padding="xl"
                 radius="xl"
-                withBorder
-                h="100%"
                 style={{
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer'
+                  height: '100%',
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.05)',
+                  transition: 'all 0.3s ease'
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-12px)';
-                  e.currentTarget.style.boxShadow = theme.shadows.xl;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = theme.shadows.md;
-                }}
+                className="hover-glow"
               >
                 <Stack gap="lg" align="center">
                   <ThemeIcon
@@ -139,15 +144,20 @@ const About = () => {
                     radius="xl"
                     variant="gradient"
                     gradient={feature.gradient}
+                    style={{
+                      boxShadow: `0 10px 30px ${theme.colors[feature.color][9]}40`,
+                      transition: 'transform 0.3s ease'
+                    }}
+                    className="icon-float"
                   >
-                    <feature.icon size={rem(40)} stroke={2} />
+                    <feature.icon size={rem(40)} stroke={1.5} />
                   </ThemeIcon>
-                  
+
                   <Stack gap="xs" align="center">
-                    <Title order={3} size="h3" ta="center" fw={700}>
+                    <Title order={3} size="h3" ta="center" fw={700} style={{ color: 'white' }}>
                       {feature.title}
                     </Title>
-                    <Text size="md" c="dimmed" ta="center">
+                    <Text size="md" c="dimmed" ta="center" style={{ color: 'rgba(255,255,255,0.6)' }}>
                       {feature.description}
                     </Text>
                   </Stack>
@@ -156,62 +166,6 @@ const About = () => {
             </motion.div>
           ))}
         </SimpleGrid>
-
-        {/* Stats Section */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="xl">
-            {[
-              { value: '3+', label: 'Years Experience as Freelance', icon: IconTrophy, gradient: { from: 'violet', to: 'grape' } },
-              { value: '20+', label: 'Projects Completed', icon: IconTarget, gradient: { from: 'cyan', to: 'blue' } },
-              { value: '100%', label: 'Client Satisfaction', icon: IconHeart, gradient: { from: 'pink', to: 'red' } }
-            ].map((stat, index) => (
-              <Card
-                key={index}
-                shadow="lg"
-                padding="xl"
-                radius="xl"
-                withBorder
-                style={{
-                  background: `linear-gradient(135deg, var(--mantine-color-${stat.gradient.from}-6), var(--mantine-color-${stat.gradient.to}-6))`,
-                  border: 'none'
-                }}
-              >
-                <Stack align="center" gap="md">
-                  <ThemeIcon
-                    size={rem(60)}
-                    radius="xl"
-                    variant="white"
-                    color={stat.gradient.from}
-                  >
-                    <stat.icon size={rem(32)} />
-                  </ThemeIcon>
-                  <Text 
-                    size={rem(56)} 
-                    fw={900} 
-                    c="white"
-                    lh={1}
-                  >
-                    {stat.value}
-                  </Text>
-                  <Text 
-                    size="md" 
-                    c="white" 
-                    fw={600}
-                    tt="uppercase"
-                    ta="center"
-                  >
-                    {stat.label}
-                  </Text>
-                </Stack>
-              </Card>
-            ))}
-          </SimpleGrid>
-        </motion.div>
       </Container>
     </Box>
   );

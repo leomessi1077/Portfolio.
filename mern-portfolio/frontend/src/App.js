@@ -15,9 +15,19 @@ import Chatbot from './components/Chatbot';
 
 function App() {
   return (
-    <MantineProvider>
+    <MantineProvider
+      defaultColorScheme="dark"
+      theme={{
+        colorScheme: 'dark',
+        fontFamily: 'Outfit, sans-serif',
+        headings: { fontFamily: 'Space Grotesk, sans-serif' },
+        primaryColor: 'indigo',
+        defaultRadius: 'lg',
+      }}
+    >
       <Notifications position="top-center" zIndex={2000} />
-      <Box>
+      <div className="noise-overlay" />
+      <Box bg="#030712">
         <Header />
         <Box component="main">
           <Home />

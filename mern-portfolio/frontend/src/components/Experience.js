@@ -5,20 +5,20 @@ import { motion } from 'framer-motion';
 
 const Experience = () => {
   console.log('✅ NEW VERSION LOADED - K-lite has 4 achievements only!');
-  
+
   // Calculate dynamic duration for K-lite
   const calculateDuration = (startYear, startMonth) => {
     const startDate = new Date(startYear, startMonth - 1);
     const currentDate = new Date();
     const diffMonths = (currentDate.getFullYear() - startDate.getFullYear()) * 12 + (currentDate.getMonth() - startDate.getMonth());
-    
+
     if (diffMonths === 0) return '1 mo';
     if (diffMonths === 1) return '1 mo';
     if (diffMonths < 12) return `${diffMonths} mos`;
-    
+
     const years = Math.floor(diffMonths / 12);
     const months = diffMonths % 12;
-    
+
     if (months === 0) return years === 1 ? '1 yr' : `${years} yrs`;
     return years === 1 ? `1 yr ${months} mos` : `${years} yrs ${months} mos`;
   };
@@ -67,9 +67,9 @@ const Experience = () => {
   ];
 
   const theme = useMantineTheme();
-  
+
   return (
-    <Box id="experience" bg="white" py={rem(120)}>
+    <Box id="experience" py={rem(120)} style={{ position: 'relative', zIndex: 1 }}>
       <Container size="xl">
         {/* Section Header */}
         <motion.div
@@ -79,30 +79,33 @@ const Experience = () => {
           viewport={{ once: true }}
         >
           <Stack align="center" gap="xl" mb={rem(60)}>
-            <Badge 
-              size="xl" 
-              variant="gradient" 
-              gradient={{ from: 'blue', to: 'indigo', deg: 45 }}
+            <Badge
+              size="xl"
+              variant="gradient"
+              gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
               radius="xl"
               px="xl"
               py="md"
               tt="uppercase"
               fw={700}
               leftSection={<IconRocket size={18} />}
+              style={{
+                boxShadow: '0 4px 15px rgba(59, 130, 246, 0.5)',
+                letterSpacing: '1px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
             >
               Career Journey
             </Badge>
-            <Title 
-              order={1} 
-              ta="center" 
-              size={rem(48)}
-              fw={900}
-              variant="gradient"
-              gradient={{ from: 'blue', to: 'indigo', deg: 45 }}
+            <Title
+              order={1}
+              className="section-title"
             >
               Experience
             </Title>
-            <Text size="xl" c="dimmed" ta="center" maw={800} px="md">
+            <Text size="xl" c="dimmed" ta="center" maw={800} px="md" style={{ color: 'var(--text-secondary)' }}>
               Building scalable solutions and driving innovation through backend excellence
             </Text>
           </Stack>
@@ -114,11 +117,12 @@ const Experience = () => {
             <Timeline.Item
               key={exp.id}
               bullet={
-                <ThemeIcon 
-                  size={rem(40)} 
-                  radius="xl" 
+                <ThemeIcon
+                  size={rem(40)}
+                  radius="xl"
                   variant="gradient"
                   gradient={{ from: exp.color, to: exp.color, deg: 45 }}
+                  style={{ boxShadow: '0 0 20px rgba(102, 126, 234, 0.4)' }}
                 >
                   <IconBriefcase size={rem(20)} />
                 </ThemeIcon>
@@ -131,22 +135,12 @@ const Experience = () => {
                   viewport={{ once: true }}
                 >
                   <Card
-                    shadow="lg"
                     padding="xl"
                     radius="xl"
-                    withBorder
+                    className="glass-card"
                     style={{
-                      transition: 'all 0.3s ease',
-                      cursor: 'pointer',
-                      background: exp.current ? `var(--mantine-color-${exp.color}-0)` : 'white'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-8px)';
-                      e.currentTarget.style.boxShadow = theme.shadows.xl;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = theme.shadows.lg;
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      backgroundColor: 'rgba(255,255,255,0.03)'
                     }}
                   >
                     <Stack gap="lg">
@@ -155,13 +149,13 @@ const Experience = () => {
                         <Group justify="space-between" align="flex-start" wrap="wrap">
                           <Stack gap="xs">
                             <Group gap="xs">
-                              <Title order={2} size="h2" fw={800}>
+                              <Title order={2} size="h2" fw={800} style={{ color: 'white' }}>
                                 {exp.title}
                               </Title>
                               {exp.current && (
-                                <Badge 
-                                  size="lg" 
-                                  variant="gradient" 
+                                <Badge
+                                  size="lg"
+                                  variant="gradient"
                                   gradient={{ from: 'teal', to: 'green', deg: 45 }}
                                   leftSection={<IconTrendingUp size={16} />}
                                 >
@@ -173,16 +167,18 @@ const Experience = () => {
                               <ThemeIcon size="sm" radius="sm" variant="light" color={exp.color}>
                                 <IconBuilding size={14} />
                               </ThemeIcon>
-                              <Text size="lg" fw={700} c={exp.color}>
+                              <Text size="lg" fw={700} c={exp.color} style={{ color: `var(--mantine-color-${exp.color}-4)` }}>
                                 {exp.company}
                               </Text>
                             </Group>
                           </Stack>
-                          <Badge 
-                            size="lg" 
-                            variant="light" 
+                          <Badge
+                            size="lg"
+                            variant="light"
                             color={exp.color}
                             radius="md"
+                            className="glass-card"
+                            style={{ background: 'rgba(255,255,255,0.05)' }}
                           >
                             {exp.type}
                           </Badge>
@@ -195,7 +191,7 @@ const Experience = () => {
                               <IconCalendar size={16} />
                             </ThemeIcon>
                             <Box>
-                              <Text size="sm" fw={600}>{exp.duration}</Text>
+                              <Text size="sm" fw={600} style={{ color: 'white' }}>{exp.duration}</Text>
                               <Text size="xs" c="dimmed">{exp.period}</Text>
                             </Box>
                           </Group>
@@ -204,14 +200,14 @@ const Experience = () => {
                               <IconMapPin size={16} />
                             </ThemeIcon>
                             <Box>
-                              <Text size="sm" fw={600}>{exp.location}</Text>
+                              <Text size="sm" fw={600} style={{ color: 'white' }}>{exp.location}</Text>
                               <Text size="xs" c="dimmed">{exp.locationType}</Text>
                             </Box>
                           </Group>
                         </Group>
                       </Stack>
 
-                      <Divider />
+                      <Divider color="rgba(255,255,255,0.1)" />
 
                       {/* Achievements */}
                       <Stack gap="md">
@@ -229,26 +225,29 @@ const Experience = () => {
                               key={idx}
                               padding="md"
                               radius="md"
-                              withBorder
-                              bg="gray.0"
+                              className="glass-card"
+                              style={{
+                                background: 'rgba(255,255,255,0.02)',
+                                border: '1px solid rgba(255,255,255,0.05)'
+                              }}
                             >
                               <Group justify="space-between" align="flex-start" wrap="nowrap">
                                 <Group gap="sm" style={{ flex: 1 }}>
-                                  <ThemeIcon 
-                                    size="xs" 
-                                    radius="xl" 
-                                    variant="light" 
+                                  <ThemeIcon
+                                    size="xs"
+                                    radius="xl"
+                                    variant="light"
                                     color={exp.color}
                                   >
                                     <IconCheck size={10} />
                                   </ThemeIcon>
-                                  <Text size="sm" style={{ flex: 1 }}>
+                                  <Text size="sm" style={{ flex: 1, color: 'rgba(255,255,255,0.8)' }}>
                                     {achievement.text}
                                   </Text>
                                 </Group>
                                 {achievement.metric && (
-                                  <Badge 
-                                    variant="filled" 
+                                  <Badge
+                                    variant="filled"
                                     color={exp.color}
                                     size="sm"
                                     radius="sm"

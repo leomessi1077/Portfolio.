@@ -50,7 +50,7 @@ const Projects = () => {
   const theme = useMantineTheme();
 
   return (
-    <Box id="projects" bg="gray.0" py={rem(120)}>
+    <Box id="projects" py={rem(120)} style={{ position: 'relative', zIndex: 1 }}>
       <Container size="xl">
         {/* Section Header */}
         <motion.div
@@ -60,30 +60,33 @@ const Projects = () => {
           viewport={{ once: true }}
         >
           <Stack align="center" gap="xl" mb={rem(60)}>
-            <Badge 
-              size="xl" 
-              variant="gradient" 
-              gradient={{ from: 'pink', to: 'orange', deg: 45 }}
+            <Badge
+              size="xl"
+              variant="gradient"
+              gradient={{ from: 'pink', to: 'orange', deg: 90 }}
               radius="xl"
               px="xl"
               py="md"
               tt="uppercase"
               fw={700}
               leftSection={<IconRocket size={18} />}
+              style={{
+                boxShadow: '0 4px 15px rgba(236, 72, 153, 0.5)',
+                letterSpacing: '1px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
             >
               Portfolio
             </Badge>
-            <Title 
-              order={1} 
-              ta="center" 
-              size={rem(48)}
-              fw={900}
-              variant="gradient"
-              gradient={{ from: 'pink', to: 'orange', deg: 45 }}
+            <Title
+              order={1}
+              className="section-title"
             >
               Featured Projects
             </Title>
-            <Text ta="center" c="dimmed" size="xl" maw={800} px="md">
+            <Text ta="center" c="dimmed" size="xl" maw={800} px="md" style={{ color: 'var(--text-secondary)' }}>
               Showcasing my recent work in web development and application design
             </Text>
           </Stack>
@@ -100,23 +103,14 @@ const Projects = () => {
               viewport={{ once: true }}
             >
               <Card
-                shadow="lg"
                 padding={0}
                 radius="xl"
-                withBorder
-                h="100%"
+                className="glass-card"
                 style={{
+                  height: '100%',
                   overflow: 'hidden',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-12px)';
-                  e.currentTarget.style.boxShadow = theme.shadows.xl;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = theme.shadows.lg;
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  backgroundColor: 'rgba(255,255,255,0.03)'
                 }}
               >
                 {/* Featured Badge */}
@@ -129,7 +123,7 @@ const Projects = () => {
                     pos="absolute"
                     top={rem(16)}
                     right={rem(16)}
-                    style={{ zIndex: 10 }}
+                    style={{ zIndex: 10, boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}
                   >
                     Featured
                   </Badge>
@@ -142,6 +136,7 @@ const Projects = () => {
                     alt={project.title}
                     h={rem(240)}
                     fit="cover"
+                    style={{ transition: 'transform 0.5s ease' }}
                   />
                   {/* Quick Actions Overlay */}
                   <Box
@@ -157,11 +152,18 @@ const Projects = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: rem(16)
+                      gap: rem(16),
+                      backdropFilter: 'blur(4px)'
                     }}
                     className="project-overlay"
-                    onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
-                    onMouseLeave={(e) => e.currentTarget.style.opacity = '0'}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = '1';
+                      e.currentTarget.previousSibling.style.transform = 'scale(1.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = '0';
+                      e.currentTarget.previousSibling.style.transform = 'scale(1)';
+                    }}
                   >
                     <Tooltip label="View Code">
                       <ActionIcon
@@ -172,6 +174,7 @@ const Projects = () => {
                         radius="xl"
                         variant="white"
                         color="dark"
+                        style={{ transform: 'scale(1.2)' }}
                       >
                         <IconBrandGithub size={24} />
                       </ActionIcon>
@@ -186,6 +189,7 @@ const Projects = () => {
                           radius="xl"
                           variant="gradient"
                           gradient={{ from: project.color, to: project.color, deg: 45 }}
+                          style={{ transform: 'scale(1.2)' }}
                         >
                           <IconExternalLink size={24} />
                         </ActionIcon>
@@ -196,17 +200,17 @@ const Projects = () => {
 
                 {/* Project Content */}
                 <Stack gap="lg" p="xl">
-                  <Title order={2} size="h2" fw={800}>
+                  <Title order={2} size="h2" fw={800} style={{ color: 'white' }}>
                     {project.title}
                   </Title>
 
-                  <Text size="md" c="dimmed">
+                  <Text size="md" c="dimmed" style={{ color: 'rgba(255,255,255,0.7)' }}>
                     {project.description}
                   </Text>
 
                   {/* Tech Stack */}
                   <Stack gap="xs">
-                    <Text size="xs" fw={700} c="dimmed" tt="uppercase">
+                    <Text size="xs" fw={700} c="dimmed" tt="uppercase" style={{ color: 'rgba(255,255,255,0.5)' }}>
                       Technologies
                     </Text>
                     <Group gap="xs">
@@ -217,6 +221,8 @@ const Projects = () => {
                           color={project.color}
                           size="lg"
                           radius="md"
+                          className="glass-card"
+                          style={{ background: 'rgba(255,255,255,0.05)' }}
                         >
                           {tech}
                         </Badge>
@@ -234,6 +240,12 @@ const Projects = () => {
                       leftSection={<IconBrandGithub size={18} />}
                       radius="md"
                       size="md"
+                      className="glass-card"
+                      style={{
+                        background: 'transparent',
+                        color: 'white',
+                        borderColor: 'rgba(255,255,255,0.2)'
+                      }}
                     >
                       Code
                     </Button>
@@ -247,6 +259,7 @@ const Projects = () => {
                         leftSection={<IconExternalLink size={18} />}
                         radius="md"
                         size="md"
+                        style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}
                       >
                         Demo
                       </Button>
