@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Container, Title, Text, Button, Stack, Box, TextInput, Textarea, Badge, SimpleGrid, ThemeIcon, Card, rem, useMantineTheme, Divider, Anchor } from '@mantine/core';
+import { Container, Title, Text, Button, Stack, Box, TextInput, Textarea, Badge, SimpleGrid, ThemeIcon, Card, rem, Divider, Anchor } from '@mantine/core';
 import { IconMail, IconPhone, IconUser, IconSend, IconBrandLinkedin, IconBrandGithub, IconMapPin, IconCheck, IconX } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 const Contact = () => {
-  const theme = useMantineTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm({

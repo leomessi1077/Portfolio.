@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Container, Title, Text, Box, Stack, Badge, ThemeIcon, Card, Timeline, rem, useMantineTheme, Divider, Group } from '@mantine/core';
+import { Container, Title, Text, Box, Stack, Badge, ThemeIcon, Card, Timeline, rem, Divider, Group } from '@mantine/core';
 import { IconBriefcase, IconCalendar, IconMapPin, IconTrendingUp, IconCheck, IconBuilding, IconRocket } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 
@@ -65,8 +65,6 @@ const Experience = () => {
       ]
     }
   ];
-
-  const theme = useMantineTheme();
 
   return (
     <Box id="experience" py={rem(120)} style={{ position: 'relative', zIndex: 1 }}>

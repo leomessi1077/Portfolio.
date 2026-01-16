@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Box, Paper, TextInput, Button, ScrollArea, Text, Group, Avatar, Stack, ActionIcon, Modal, Badge, Transition } from '@mantine/core';
-import { IconSend, IconRobot, IconX, IconMessageCircle, IconSparkles, IconUser, IconBriefcase } from '@tabler/icons-react';
+import { Box, Paper, TextInput, Button, ScrollArea, Text, Group, Avatar, Stack, ActionIcon, Modal, Badge } from '@mantine/core';
+import { IconSend, IconRobot, IconX, IconMessageCircle, IconUser } from '@tabler/icons-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import confetti from 'canvas-confetti';
