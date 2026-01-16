@@ -198,11 +198,10 @@ const Home = () => {
                 component="a"
                 href="/resume.pdf"
                 download
+                className="hover:scale-105 shadow-glow"
                 style={{
-                  boxShadow: '0 10px 20px -5px rgba(99, 102, 241, 0.4)',
-                  transition: 'transform 0.2s'
+                  transition: 'transform 0.3s ease, box-shadow 0.3s ease'
                 }}
-                className="hover:scale-105"
               >
                 Download Resume
               </Button>
@@ -214,11 +213,13 @@ const Home = () => {
                 leftSection={<IconMail size={22} />}
                 component="a"
                 href="#contact"
+                className="hover:scale-105 transition-all"
                 style={{
                   border: '1px solid rgba(255,255,255,0.2)',
                   color: 'white',
                   background: 'rgba(255,255,255,0.03)',
-                  backdropFilter: 'blur(10px)'
+                  backdropFilter: 'blur(10px)',
+                  transition: 'all 0.3s ease'
                 }}
               >
                 Contact Me

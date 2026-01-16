@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Title, Card, Text, Button, Badge, Stack, Box, Image, SimpleGrid, rem, useMantineTheme, ActionIcon, Tooltip, Group } from '@mantine/core';
+import { Container, Title, Card, Text, Button, Badge, Stack, Box, Image, SimpleGrid, rem, ActionIcon, Tooltip, Group } from '@mantine/core';
 import { IconBrandGithub, IconExternalLink, IconRocket, IconStar } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 
@@ -47,8 +47,6 @@ const projects = [
 ];
 
 const Projects = () => {
-  const theme = useMantineTheme();
-
   return (
     <Box id="projects" py={rem(120)} style={{ position: 'relative', zIndex: 1 }}>
       <Container size="xl">
@@ -102,176 +100,189 @@ const Projects = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card
-                padding={0}
-                radius="xl"
-                className="glass-card"
-                style={{
-                  height: '100%',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  backgroundColor: 'rgba(255,255,255,0.03)'
-                }}
+              <motion.div
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                style={{ height: '100%' }}
               >
-                {/* Featured Badge */}
-                {project.featured && (
-                  <Badge
-                    size="lg"
-                    variant="gradient"
-                    gradient={{ from: 'yellow', to: 'orange', deg: 45 }}
-                    leftSection={<IconStar size={16} />}
-                    pos="absolute"
-                    top={rem(16)}
-                    right={rem(16)}
-                    style={{ zIndex: 10, boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}
-                  >
-                    Featured
-                  </Badge>
-                )}
+                <Card
+                  padding={0}
+                  radius="xl"
+                  className="glass-card"
+                  style={{
+                    height: '100%',
+                    overflow: 'hidden',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    backgroundColor: 'rgba(255,255,255,0.03)'
+                  }}
+                >
+                  {/* Featured Badge */}
+                  {project.featured && (
+                    <Badge
+                      size="lg"
+                      variant="gradient"
+                      gradient={{ from: 'yellow', to: 'orange', deg: 45 }}
+                      leftSection={<IconStar size={16} />}
+                      pos="absolute"
+                      top={rem(16)}
+                      right={rem(16)}
+                      style={{ zIndex: 10, boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}
+                    >
+                      Featured
+                    </Badge>
+                  )}
 
-                {/* Project Image */}
-                <Box pos="relative" h={rem(240)}>
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    h={rem(240)}
-                    fit="cover"
-                    style={{ transition: 'transform 0.5s ease' }}
-                  />
-                  {/* Quick Actions Overlay */}
-                  <Box
-                    pos="absolute"
-                    top={0}
-                    left={0}
-                    right={0}
-                    bottom={0}
-                    bg="rgba(0,0,0,0.6)"
-                    style={{
-                      opacity: 0,
-                      transition: 'opacity 0.3s ease',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: rem(16),
-                      backdropFilter: 'blur(4px)'
-                    }}
-                    className="project-overlay"
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.opacity = '1';
-                      e.currentTarget.previousSibling.style.transform = 'scale(1.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.opacity = '0';
-                      e.currentTarget.previousSibling.style.transform = 'scale(1)';
-                    }}
-                  >
-                    <Tooltip label="View Code">
-                      <ActionIcon
+                  {/* Project Image */}
+                  <Box pos="relative" h={rem(240)} style={{ overflow: 'hidden' }}>
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                      style={{ height: '100%' }}
+                    >
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        h={rem(240)}
+                        fit="cover"
+                      />
+                    </motion.div>
+                    {/* Quick Actions Overlay */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'rgba(0,0,0,0.75)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: rem(16),
+                        backdropFilter: 'blur(8px)'
+                      }}
+                    >
+                      <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                        <Tooltip label="View Code" withArrow>
+                          <ActionIcon
+                            component="a"
+                            href={project.github}
+                            target="_blank"
+                            size="xl"
+                            radius="xl"
+                            variant="white"
+                            color="dark"
+                          >
+                            <IconBrandGithub size={24} />
+                          </ActionIcon>
+                        </Tooltip>
+                      </motion.div>
+                      {project.live !== '#' && (
+                        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                          <Tooltip label="Live Demo" withArrow>
+                            <ActionIcon
+                              component="a"
+                              href={project.live}
+                              target="_blank"
+                              size="xl"
+                              radius="xl"
+                              variant="gradient"
+                              gradient={{ from: project.color, to: project.color, deg: 45 }}
+                            >
+                              <IconExternalLink size={24} />
+                            </ActionIcon>
+                          </Tooltip>
+                        </motion.div>
+                      )}
+                    </motion.div>
+                  </Box>
+
+                  {/* Project Content */}
+                  <Stack gap="lg" p="xl">
+                    <Title order={2} size="h2" fw={800} style={{ color: 'white' }}>
+                      {project.title}
+                    </Title>
+
+                    <Text size="md" c="dimmed" style={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>
+                      {project.description}
+                    </Text>
+
+                    {/* Tech Stack */}
+                    <Stack gap="xs">
+                      <Text size="xs" fw={700} c="dimmed" tt="uppercase" style={{ color: 'rgba(255,255,255,0.5)', letterSpacing: '1px' }}>
+                        Technologies
+                      </Text>
+                      <Group gap="xs">
+                        {project.tech.map((tech, techIndex) => (
+                          <motion.div
+                            key={techIndex}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, delay: techIndex * 0.05 }}
+                            whileHover={{ scale: 1.1 }}
+                          >
+                            <Badge
+                              variant="light"
+                              color={project.color}
+                              size="lg"
+                              radius="md"
+                              className="glass-card"
+                              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+                            >
+                              {tech}
+                            </Badge>
+                          </motion.div>
+                        ))}
+                      </Group>
+                    </Stack>
+
+                    {/* Action Buttons */}
+                    <Group grow>
+                      <Button
                         component="a"
                         href={project.github}
                         target="_blank"
-                        size="xl"
-                        radius="xl"
-                        variant="white"
-                        color="dark"
-                        style={{ transform: 'scale(1.2)' }}
+                        variant="default"
+                        leftSection={<IconBrandGithub size={18} />}
+                        radius="md"
+                        size="md"
+                        className="glass-card transition-all"
+                        style={{
+                          background: 'transparent',
+                          color: 'white',
+                          borderColor: 'rgba(255,255,255,0.2)'
+                        }}
                       >
-                        <IconBrandGithub size={24} />
-                      </ActionIcon>
-                    </Tooltip>
-                    {project.live !== '#' && (
-                      <Tooltip label="Live Demo">
-                        <ActionIcon
+                        Code
+                      </Button>
+                      {project.live !== '#' && (
+                        <Button
                           component="a"
                           href={project.live}
                           target="_blank"
-                          size="xl"
-                          radius="xl"
                           variant="gradient"
                           gradient={{ from: project.color, to: project.color, deg: 45 }}
-                          style={{ transform: 'scale(1.2)' }}
-                        >
-                          <IconExternalLink size={24} />
-                        </ActionIcon>
-                      </Tooltip>
-                    )}
-                  </Box>
-                </Box>
-
-                {/* Project Content */}
-                <Stack gap="lg" p="xl">
-                  <Title order={2} size="h2" fw={800} style={{ color: 'white' }}>
-                    {project.title}
-                  </Title>
-
-                  <Text size="md" c="dimmed" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                    {project.description}
-                  </Text>
-
-                  {/* Tech Stack */}
-                  <Stack gap="xs">
-                    <Text size="xs" fw={700} c="dimmed" tt="uppercase" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                      Technologies
-                    </Text>
-                    <Group gap="xs">
-                      {project.tech.map((tech, techIndex) => (
-                        <Badge
-                          key={techIndex}
-                          variant="light"
-                          color={project.color}
-                          size="lg"
+                          leftSection={<IconExternalLink size={18} />}
                           radius="md"
-                          className="glass-card"
-                          style={{ background: 'rgba(255,255,255,0.05)' }}
+                          size="md"
+                          className="shadow-glow"
+                          style={{ transition: 'all 0.3s ease' }}
                         >
-                          {tech}
-                        </Badge>
-                      ))}
+                          Demo
+                        </Button>
+                      )}
                     </Group>
                   </Stack>
-
-                  {/* Action Buttons */}
-                  <Group grow>
-                    <Button
-                      component="a"
-                      href={project.github}
-                      target="_blank"
-                      variant="default"
-                      leftSection={<IconBrandGithub size={18} />}
-                      radius="md"
-                      size="md"
-                      className="glass-card"
-                      style={{
-                        background: 'transparent',
-                        color: 'white',
-                        borderColor: 'rgba(255,255,255,0.2)'
-                      }}
-                    >
-                      Code
-                    </Button>
-                    {project.live !== '#' && (
-                      <Button
-                        component="a"
-                        href={project.live}
-                        target="_blank"
-                        variant="gradient"
-                        gradient={{ from: project.color, to: project.color, deg: 45 }}
-                        leftSection={<IconExternalLink size={18} />}
-                        radius="md"
-                        size="md"
-                        style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}
-                      >
-                        Demo
-                      </Button>
-                    )}
-                  </Group>
-                </Stack>
-              </Card>
+                </Card>
+              </motion.div>
             </motion.div>
           ))}
         </SimpleGrid>
       </Container>
-    </Box>
+    </Box >
   );
 };
 

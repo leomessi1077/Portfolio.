@@ -1,6 +1,6 @@
 import React from 'react';
-import { Container, Title, Text, Box, Stack, Badge, SimpleGrid, Card, Progress, rem, useMantineTheme, Group, ThemeIcon, Divider } from '@mantine/core';
-import { IconTools, IconCode, IconDatabase, IconServer, IconDeviceDesktop, IconCloud } from '@tabler/icons-react';
+import { Container, Title, Text, Box, Stack, Badge, SimpleGrid, Card, Progress, rem, useMantineTheme, Group, ThemeIcon, Divider, Paper, RingProgress, Center } from '@mantine/core';
+import { IconTools, IconCode, IconDatabase, IconServer, IconDeviceDesktop, IconCloud, IconShoppingCart } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 
 const Skills = () => {
@@ -41,6 +41,16 @@ const Skills = () => {
         { name: 'MySQL', level: 70 },
         { name: 'AWS', level: 75 },
         { name: 'Vercel', level: 80 },
+        { name: 'Git/GitHub', level: 90 }
+      ]
+    },
+    {
+      title: 'E-Commerce & Tools',
+      icon: IconShoppingCart,
+      color: 'green',
+      skills: [
+        { name: 'Shopify', level: 85 },
+        { name: 'WordPress', level: 80 },
         { name: 'Git/GitHub', level: 90 }
       ]
     }
@@ -90,7 +100,7 @@ const Skills = () => {
         </motion.div>
 
         {/* Skills Grid */}
-        <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl">
+        <SimpleGrid cols={{ base: 1, md: 2, lg: 4 }} spacing="xl">
           {skillCategories.map((category, index) => (
             <motion.div
               key={index}
@@ -102,54 +112,98 @@ const Skills = () => {
               <Card
                 padding="xl"
                 radius="xl"
-                className="glass-card"
+                className="skill-card"
                 style={{
                   height: '100%',
                   border: '1px solid rgba(255,255,255,0.1)',
-                  backgroundColor: 'rgba(255,255,255,0.03)'
+                  backgroundColor: 'rgba(255,255,255,0.03)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
                 }}
               >
+                {/* Gradient Overlay on Hover */}
+                <Box
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: '4px',
+                    background: `linear-gradient(90deg, var(--mantine-color-${category.color}-6), var(--mantine-color-${category.color}-4))`,
+                    opacity: 0.8,
+                    transition: 'height 0.3s ease'
+                  }}
+                  className="skill-card-accent"
+                />
+
                 <Stack gap="xl">
                   {/* Category Header */}
-                  <Group>
+                  <Group wrap="nowrap" gap="md">
                     <ThemeIcon
-                      size={rem(50)}
-                      radius="md"
+                      size={rem(56)}
+                      radius="lg"
                       variant="gradient"
                       gradient={{ from: category.color, to: `${category.color}.4`, deg: 45 }}
-                      style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.2)' }}
+                      style={{
+                        boxShadow: `0 8px 20px rgba(0,0,0,0.3), 0 0 20px var(--mantine-color-${category.color}-9)`,
+                        transition: 'all 0.3s ease'
+                      }}
+                      className="skill-icon"
                     >
-                      <category.icon size={rem(26)} stroke={1.5} />
+                      <category.icon size={rem(28)} stroke={1.5} />
                     </ThemeIcon>
-                    <Title order={3} size="h3" fw={700} style={{ color: 'white' }}>
-                      {category.title}
-                    </Title>
+                    <Box style={{ flex: 1 }}>
+                      <Title order={3} size="h4" fw={700} style={{ color: 'white', marginBottom: '4px' }}>
+                        {category.title}
+                      </Title>
+                      <Text size="xs" c="dimmed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                        {category.skills.length} skills
+                      </Text>
+                    </Box>
                   </Group>
 
                   <Divider color="rgba(255,255,255,0.1)" />
 
                   {/* Skills List */}
-                  <Stack gap="lg">
+                  <Stack gap="md">
                     {category.skills.map((skill, skillIndex) => (
-                      <Box key={skillIndex}>
-                        <Group justify="space-between" mb={5}>
-                          <Text fw={600} size="sm" style={{ color: 'rgba(255,255,255,0.9)' }}>
-                            {skill.name}
-                          </Text>
-                          <Text fw={700} size="xs" c={category.color} style={{ color: `var(--mantine-color-${category.color}-4)` }}>
-                            {skill.level}%
-                          </Text>
-                        </Group>
-                        <Progress
-                          value={skill.level}
-                          color={category.color}
-                          size="md"
-                          radius="xl"
-                          striped
-                          animated
-                          bg="rgba(255,255,255,0.1)"
-                        />
-                      </Box>
+                      <motion.div
+                        key={skillIndex}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: skillIndex * 0.05 }}
+                        viewport={{ once: true }}
+                      >
+                        <Box>
+                          <Group justify="space-between" mb={8}>
+                            <Text fw={600} size="sm" style={{ color: 'rgba(255,255,255,0.95)' }}>
+                              {skill.name}
+                            </Text>
+                            <Badge
+                              size="sm"
+                              variant="gradient"
+                              gradient={{ from: category.color, to: `${category.color}.4`, deg: 90 }}
+                              style={{ fontWeight: 700 }}
+                            >
+                              {skill.level}%
+                            </Badge>
+                          </Group>
+                          <Progress
+                            value={skill.level}
+                            color={category.color}
+                            size="sm"
+                            radius="xl"
+                            striped
+                            animated
+                            bg="rgba(255,255,255,0.08)"
+                            style={{
+                              boxShadow: `0 2px 8px rgba(0,0,0,0.2)`,
+                              border: '1px solid rgba(255,255,255,0.05)'
+                            }}
+                          />
+                        </Box>
+                      </motion.div>
                     ))}
                   </Stack>
                 </Stack>
