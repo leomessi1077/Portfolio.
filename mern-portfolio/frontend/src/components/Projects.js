@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Title, Card, Text, Button, Badge, Stack, Box, Image, SimpleGrid, rem, ActionIcon, Tooltip, Group } from '@mantine/core';
+import { Container, Title, Card, Text, Button, Badge, Stack, Box, Image, SimpleGrid, rem, useMantineTheme, ActionIcon, Tooltip, Group } from '@mantine/core';
 import { IconBrandGithub, IconExternalLink, IconRocket, IconStar } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 
@@ -47,6 +47,8 @@ const projects = [
 ];
 
 const Projects = () => {
+  const theme = useMantineTheme();
+
   return (
     <Box id="projects" py={rem(120)} style={{ position: 'relative', zIndex: 1 }}>
       <Container size="xl">

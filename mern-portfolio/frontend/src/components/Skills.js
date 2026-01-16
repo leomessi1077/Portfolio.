@@ -1,11 +1,9 @@
 import React from 'react';
-import { Container, Title, Text, Box, Stack, Badge, SimpleGrid, Card, Progress, rem, useMantineTheme, Group, ThemeIcon, Divider, Paper, RingProgress, Center } from '@mantine/core';
-import { IconTools, IconCode, IconDatabase, IconServer, IconDeviceDesktop, IconCloud, IconShoppingCart } from '@tabler/icons-react';
+import { Container, Title, Text, Box, Stack, Badge, SimpleGrid, Card, Progress, rem, Group, ThemeIcon, Divider } from '@mantine/core';
+import { IconTools, IconDatabase, IconServer, IconDeviceDesktop, IconShoppingCart } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 
 const Skills = () => {
-  const theme = useMantineTheme();
-
   const skillCategories = [
     {
       title: 'Frontend Development',

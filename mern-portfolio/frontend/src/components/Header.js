@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Group, Burger, Drawer, Stack, Button, Box, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconCode } from '@tabler/icons-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const Header = () => {
   const [opened, { toggle, close }] = useDisclosure(false);

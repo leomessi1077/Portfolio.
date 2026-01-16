@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Title, Text, Group, Button, Stack, Box, Avatar, Badge, Tooltip } from '@mantine/core';
-import { IconBrandLinkedin, IconBrandGithub, IconArrowDown, IconSparkles, IconDownload, IconMail } from '@tabler/icons-react';
+import { IconBrandLinkedin, IconBrandGithub, IconSparkles, IconDownload, IconMail } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import profilePic from '../assets/1000120900.jpg';
 
